@@ -111,6 +111,10 @@
    FOUR_TWENTY_A,         /* DSM 420a */
    FORD_ST170,            /* Ford ST170 */
    MITSUBISHI_3A92,        /* Mitsubishi 3cylinder 3A92 */
+   ROVER_K_MODE1_36_ONE_ONE,         /* early MEMS versions with 24-1-1 pattern (aka 12-1 at cam speed) */
+   ROVER_K_MODE2_36_ONE_ONE_ONE_ONE, /* MEMS 1.9 of the 36 with 4 missing teeth */
+   ROVER_K_MODE3_36_ONE_ONE_ONE_ONE, /* MEMS 2.0 of the 36 with 4 missing teeth at different places */
+   ROVER_K_MODE4_36_ONE_ONE_ONE_ONE, /* MEMS 3.0 of the 36 with 4 missing teeth at different places */
    MAX_WHEELS,
  }WheelType;
 
@@ -164,8 +168,11 @@
  const char gm_seven_x_friendly_name[] PROGMEM = "GM 7X";
  const char four_twenty_a_friendly_name[] PROGMEM = "DSM 420a";
  const char ford_st170_friendly_name[] PROGMEM = "Ford ST170";
- const char mitsubishi_3A92_friendly_name[] PROGMEM = "Mitsubishi 3A92";
- 
+ const char mitsubishi_3A92_friendly_name[] PROGMEM = "Mitsubishi 3A92";  
+ const char rover_k_mode1_thirtysix_minus_one_one_friendly_name[] PROGMEM = "Rover k series 36-1-1 flywheel EARLY";
+ const char rover_k_mode2_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover k series 36-1-1-1-1 flywheel MEMS 1.9";
+ const char rover_k_mode3_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover k series 36-1-1-1-1 flywheel MEMS 2";
+ const char rover_k_mode4_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover k series 36-1-1-1-1 flywheel MEMS 3";
 
  /* Very simple 50% duty cycle */
  const unsigned char dizzy_four_cylinder[] PROGMEM = 
@@ -1138,5 +1145,62 @@
       3,2,2,2,2,2,3,2,3,2,3,2,
       3,2,3,2,3,2,3,2,3,2,3,2
    };
+
+/* Rover K series engine tooth patterns. 4 available. 1st isn't commoon (24-1-1). 2,3 and 4 are the most common. Don't have details on the camshaft hence a 360 degree pattern
+ * Pattern 1 is MEMS 1.0,1.3, 1.6 36-1-1 with the teeth grouped 17-17- with gaps (i believe) at 0 and 180 degrees. Guess VR sensor is 55 BTDC 
+ * Pattern 2 is MEMS 1.9 36-1-1-1-1 with the teeth grouped 12-4-11-5 with gaps at 100, 180, 310 and 0. VR sensor 55DTDC
+ * Pattern 3 is MEMS 2.0 36-1-1-1-1 with the teeth grouped 14-3-13-2 with gaps at 30,60, 210 and 250 VR sensor 55 BTDC
+ * Pattern 4 is MEMS 3.0 36-1-1-1-1 with the teeth grouped 14-3-13-2 - ie same as MEMS 2.0 but the location on the wheel is different, 40 degrees sooner. VR sensor 55 BTDC
+ */
+
+  const unsigned char rover_k_mode1_thirtysix_minus_one_one [] PROGMEM =
+  {
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,0,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,0
+  };
+
+  const unsigned char rover_k_mode2_thirtysix_minus_one_one_one_one [] PROGMEM =
+  {
+      0,1,0,1,0,0,0,1,0,1,
+      0,1,0,1,0,0,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,0,
+      0,1,0,1,0,1,0,1,0,1,
+      0,0,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1
+  };
+
+  const unsigned char rover_k_mode3_thirtysix_minus_one_one_one_one [] PROGMEM =
+  {
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,0,0,1,
+      0,1,0,0,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,0,0,1,0,1,0,1,
+      0,0,0,1,0,1,0,1,0,1,
+      0,1
+  };
+ 
+  const unsigned char rover_k_mode4_thirtysix_minus_one_one_one_one [] PROGMEM =
+  {
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,0,0,1,0,1,
+      0,0,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,1,0,1,0,1,0,1,
+      0,1,0,0,0,1,0,1,0,1,
+      0,0,0,1,0,1,0,1,0,1,
+      0,1
+  };
+
+ 
 
   #endif
