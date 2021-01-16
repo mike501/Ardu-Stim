@@ -117,6 +117,7 @@ wheels Wheels[MAX_WHEELS] = {
   { Toyota_4AGE_CAS_friendly_name, toyota_4AGE_CAS, 0.333, 144, 720 },
   { Toyota_4AGZE_friendly_name, toyota_4AGZE, 0.333, 144, 720 },
   { rover_mems_mode1_thirtysix_minus_one_one_friendly_name,  rover_mems_mode1_thirtysix_minus_one_one,  0.6, 72, 360 },
+  { rover_mems_mode1_cam_thirtysix_minus_one_one_friendly_name,  rover_mems_mode1_cam_thirtysix_minus_one_one,  0.6, 144, 720 },
   { rover_mems_mode2_thirtysix_minus_one_one_one_one_friendly_name, rover_mems_mode2_thirtysix_minus_one_one_one_one, 0.6, 144, 720 }, 
   { rover_mems_mode3_thirtysix_minus_one_one_one_one_friendly_name, rover_mems_mode3_thirtysix_minus_one_one_one_one, 0.6, 144, 720 }, 
   { rover_mems_mode4_thirtysix_minus_one_one_one_one_friendly_name, rover_mems_mode4_thirtysix_minus_one_one_one_one, 0.6, 144, 720 },

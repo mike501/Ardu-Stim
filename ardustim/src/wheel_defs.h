@@ -115,6 +115,7 @@
    TOYOTA_4AGE_CAS,           /*Toyota 4AGE CAS, 4 teeth and one cam tooth*/
    TOYOTA_4AGZE,           /*Toyota 4AGZE, 24 teeth and one cam tooth*/
    ROVER_K_MODE1_36_ONE_ONE,         /* MEMS pattern 1 36-1-1 with teeth as 17 gap 17 gap */
+   ROVER_K_MODE1_CAM_36_ONE_ONE,     /* MEMS pattern 1 36-1-1 with teeth as 17 gap 17 gap and horseshoe CAM*/
    ROVER_K_MODE2_36_ONE_ONE_ONE_ONE, /* MEMS pattern 2 36-1-1-1-1 with teeth as 11 gap 5 gap 12 gap 4 gap */
    ROVER_K_MODE3_36_ONE_ONE_ONE_ONE, /* MEMS pattern 3 36-1-1-1-1 with teeth as 2 gap 14 gap 3 gap 13 gap */
    ROVER_K_MODE4_36_ONE_ONE_ONE_ONE, /* MEMS pattern 4 36-1-1-1-1 with teeth as 3 gap 14 gap 2 gap 13 gap */
@@ -176,6 +177,7 @@
  const char Toyota_4AGE_CAS_friendly_name[] PROGMEM = "Toyota 4AGE";
  const char Toyota_4AGZE_friendly_name[] PROGMEM = "Toyota 4AGZE";
  const char rover_mems_mode1_thirtysix_minus_one_one_friendly_name[] PROGMEM = "Rover 36-1-1 flywheel EARLY MEMS";
+ const char rover_mems_mode1_cam_thirtysix_minus_one_one_friendly_name[] PROGMEM = "Rover 36-1-1 flywheel EARLY MEMS with CAM";
  const char rover_mems_mode2_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover 36-1-1-1-1 11 gap 5 gap 12 gap 4 gap";
  const char rover_mems_mode3_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover 36-1-1-1-1 2 gap 14 gap 3 gap 13 gap";
  const char rover_mems_mode4_thirtysix_minus_one_one_one_one_friendly_name[] PROGMEM = "Rover 36-1-1-1-1 3 gap 14 gap 2 gap 13 gap";
@@ -1217,6 +1219,7 @@
   
 /* Rover MEMS engine tooth patterns. 4 available. 1st isn't commoon (36-1-1). 2,3 and 4 are the most common. 
  * Pattern 1 is MEMS 1.0,1.3,1.6 36-1-1 with the teeth grouped 17-17- 
+ * Pattern 1 is MEMS 1.0,1.3,1.6 36-1-1 with the teeth grouped 17-17- with horseshoe cam 
  * Pattern 2 is MEMS 1.9 36-1-1-1-1 with the teeth grouped 12-4-11-5 with gaps at 120, 180, 310, 360
  * Pattern 3 is MEMS 2.0 36-1-1-1-1 with the teeth grouped 14-3-13-2 with gaps at 80, 110, 260, 300
  * Pattern 4 is MEMS 3.0 36-1-1-1-1 with the teeth grouped 14-2-13-3 with gaps at 80, 120, 270, 300
@@ -1234,43 +1237,65 @@
     0,0
   };
 
+  const unsigned char rover_mems_mode1_cam_thirtysix_minus_one_one [] PROGMEM =
+  {
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,0,0,1,0,1,0,
+    1,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    2,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,2,2,3,2,
+    3,2,3,2,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,0,0
+  };                  
+
+
   const unsigned char rover_mems_mode2_thirtysix_minus_one_one_one_one [] PROGMEM =
   {
     1,0,1,0,1,0,1,0,1,0,
     1,0,1,0,1,0,1,0,1,0,
     1,0,0,0,1,0,1,0,1,0,
-    1,2,3,2,2,2,3,2,3,2,
-    3,2,3,2,3,2,3,2,3,2,
+    1,0,1,0,0,0,1,0,1,0,
+    1,2,3,2,3,2,3,2,3,2,
     3,2,3,2,3,2,3,2,3,2,
     2,2,3,2,3,2,3,2,3,2,
     2,2,3,2,3,2,3,2,3,2,
     3,2,3,2,3,2,3,2,3,2,
     3,2,3,2,2,2,3,2,3,2,
-    3,2,3,0,1,0,0,0,1,0,
-    1,0,1,0,1,0,1,0,1,0,
+    3,2,3,2,3,2,2,2,3,2,
+    3,2,3,2,1,0,1,0,1,0,
     1,0,1,0,1,0,1,0,1,0,
     1,0,0,0,1,0,1,0,1,0,
     1,0,0,0
-  };                 
+  };                  
+                
 
   const unsigned char rover_mems_mode3_thirtysix_minus_one_one_one_one [] PROGMEM =
   {
     1,0,1,0,0,0,1,0,1,0,
     0,0,1,0,1,0,1,0,1,0,
     1,0,1,0,1,0,1,0,1,0,
-    1,2,3,2,3,2,3,2,3,2,
-    2,2,3,2,3,2,3,2,2,2,
+    1,0,1,0,1,0,1,0,1,0,
+    0,2,3,2,3,2,3,2,2,2,
     3,2,3,2,3,2,3,2,3,2,
     3,2,3,2,3,2,3,2,3,2,
     3,2,3,2,3,2,2,2,3,2,
     3,2,2,2,3,2,3,2,3,2,
     3,2,3,2,3,2,3,2,3,2,
-    3,2,3,0,1,0,1,0,1,0,
-    1,0,0,0,1,0,1,0,1,0,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,2,2,1,0,1,0,1,0,
     0,0,1,0,1,0,1,0,1,0,
     1,0,1,0,1,0,1,0,1,0,
     1,0,1,0
-  };          
+  };                  
+          
 
 
  
@@ -1291,6 +1316,7 @@
     1,0,1,0,1,0,0,0,1,0,
     1,0,0,0,1,0,1,0,1,0,
     1,0,1,0
-  };  
+  };                   
+ 
   
   #endif
