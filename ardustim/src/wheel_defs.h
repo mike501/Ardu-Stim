@@ -112,6 +112,7 @@
    FOUR_TWENTY_A,         /* DSM 420a */
    FORD_ST170,            /* Ford ST170 */
    MITSUBISHI_3A92,        /* Mitsubishi 3cylinder 3A92 */
+   MITSUBISHI_4B11,        /* Mitsubish 4 cylinder 4b11 */
    TOYOTA_4AGE_CAS,           /*Toyota 4AGE CAS, 4 teeth and one cam tooth*/
    TOYOTA_4AGZE,           /*Toyota 4AGZE, 24 teeth and one cam tooth*/
    MAX_WHEELS,
@@ -168,6 +169,7 @@
  const char gm_seven_x_friendly_name[] PROGMEM = "GM 7X";
  const char four_twenty_a_friendly_name[] PROGMEM = "DSM 420a";
  const char ford_st170_friendly_name[] PROGMEM = "Ford ST170";
+ const char mitsubishi_4b11_friendly_name[] PROGMEM = "Mitsubishi 4b11";
  const char mitsubishi_3A92_friendly_name[] PROGMEM = "Mitsubishi 3A92";
  const char Toyota_4AGE_CAS_friendly_name[] PROGMEM = "Toyota 4AGE";
  const char Toyota_4AGZE_friendly_name[] PROGMEM = "Toyota 4AGZE";
@@ -1174,6 +1176,23 @@
       3,2,2,2,2,2,3,2,3,2,3,2,
       3,2,3,2,3,2,3,2,3,2,3,2
    };
+   
+   const unsigned char mitsubishi_4b11[] PROGMEM = 
+   {
+      3,2,3,2,2,2,3,2,1,0,1,0,
+      1,0,3,2,1,0,3,2,3,2,3,2,
+      3,2,3,2,2,2,3,2,3,2,3,2,
+      3,2,3,2,3,2,3,2,3,2,3,2,
+      3,2,2,2,2,2,3,2,3,2,1,0,
+      1,0,1,0,3,2,3,2,3,2,3,2,
+      3,2,3,2,2,2,3,2,3,2,3,2,
+      3,2,3,2,3,2,3,2,3,2,3,2,
+      3,2,3,2,2,2,3,2,1,0,1,0,
+      1,0,3,2,3,2,3,2,3,2,3,2,
+      3,2,2,2,2,2,3,2,3,2,3,2,
+      3,2,3,2,3,2,3,2,3,2,3,2
+   };
+   
    /* 4AGE CAS inside dizzy, 4 pulses 2 per crank revolution one cam pulse at 5 Deg  */
 
 	 const unsigned char toyota_4AGE_CAS[] PROGMEM = 
