@@ -109,11 +109,14 @@ wheels Wheels[MAX_WHEELS] = {
   { miata_9905_friendly_name, miata_9905, 0.6, 144, 720 },
   { twelve_with_cam_friendly_name, twelve_with_cam, 0.6, 144, 720 },
   { twenty_four_with_cam_friendly_name, twelve_with_cam, 0.6, 144, 720 },
+  { subaru_impreza_friendly_name, subaru_impreza, 3.0, 720, 720 },
   { subaru_six_seven_name_friendly_name, subaru_six_seven, 3.0, 720, 720 },
   { gm_seven_x_friendly_name, gm_seven_x, 1.502, 180, 720 },
   { four_twenty_a_friendly_name, four_twenty_a, 0.6, 144, 720 },
   { ford_st170_friendly_name, ford_st170, 0.6, 720, 720 },
   { mitsubishi_3A92_friendly_name, mitsubishi_3A92, 0.6, 144, 720 },
+  { mitsubishi_4b11_friendly_name, mitsubishi_4b11, 0.6, 144, 720 },
+  { mitsubishi_4b94_friendly_name, mitsubishi_4b94, 0.6, 144, 720 },
   { Toyota_4AGE_CAS_friendly_name, toyota_4AGE_CAS, 0.333, 144, 720 },
   { Toyota_4AGZE_friendly_name, toyota_4AGZE, 0.333, 144, 720 },
 };
@@ -224,7 +227,7 @@ ISR(ADC_vect){
   if (analog_port == 0)
   {
     adc0 = ADCL | (ADCH << 8);
-	  adc0_read_complete = true;
+    adc0_read_complete = true;
     /* Flip to channel 1 */
     //ADMUX |= B00000001;
     //analog_port = 1;
@@ -235,7 +238,7 @@ ISR(ADC_vect){
 //  if (analog_port == 1)
 //  {
 //    adc1 = ADCL | (ADCH << 8);
-//	adc1_read_complete = true;
+//  adc1_read_complete = true;
 //    /* Flip to channel 0 */
 //    /* Tell it to read ADC0, clear MUX0..3 */
 //    ADMUX &= B11110000;

@@ -107,11 +107,14 @@
    MIATA_9905,
    TWELVE_WITH_CAM, //12 evenly spaced crank teeth and a single cam tooth
    TWENTY_FOUR_WITH_CAM, //24 evenly spaced crank teeth and a single cam tooth
+   SUBARU_IMPREZA, /* Subaru Impreza 1.6 fwd, standard subaru 6 tooth crank but with extra tooth at 5 degrees */
    SUBARU_SIX_SEVEN,      /* Subaru 6 crank, 7 cam */
    GM_7X,                 /* GM 7X pattern. 6 even teeth with 1 extra uneven tooth */
    FOUR_TWENTY_A,         /* DSM 420a */
    FORD_ST170,            /* Ford ST170 */
    MITSUBISHI_3A92,        /* Mitsubishi 3cylinder 3A92 */
+   MITSUBISHI_4B11,        /* Mitsubish 4 cylinder 4b11 */
+   MITSUBISHI_4B94,        /* Mitsubish 4 cylinder 4b94 */
    TOYOTA_4AGE_CAS,           /*Toyota 4AGE CAS, 4 teeth and one cam tooth*/
    TOYOTA_4AGZE,           /*Toyota 4AGZE, 24 teeth and one cam tooth*/
    MAX_WHEELS,
@@ -164,10 +167,13 @@
  const char miata_9905_friendly_name[] PROGMEM = "Miata 99-05";
  const char twelve_with_cam_friendly_name[] PROGMEM = "12/1 (12 crank with cam)";
  const char twenty_four_with_cam_friendly_name[] PROGMEM = "24/1 (24 crank with cam)";
+ const char subaru_impreza_friendly_name[] PROGMEM = "Subaru Impreza 95 1.6";
  const char subaru_six_seven_name_friendly_name[] PROGMEM = "Subaru 6/7 crank and cam";
  const char gm_seven_x_friendly_name[] PROGMEM = "GM 7X";
  const char four_twenty_a_friendly_name[] PROGMEM = "DSM 420a";
  const char ford_st170_friendly_name[] PROGMEM = "Ford ST170";
+ const char mitsubishi_4b11_friendly_name[] PROGMEM = "Mitsubishi 4b11";
+  const char mitsubishi_4b94_friendly_name[] PROGMEM = "Mitsubishi 4b94";
  const char mitsubishi_3A92_friendly_name[] PROGMEM = "Mitsubishi 3A92";
  const char Toyota_4AGE_CAS_friendly_name[] PROGMEM = "Toyota 4AGE";
  const char Toyota_4AGZE_friendly_name[] PROGMEM = "Toyota 4AGZE";
@@ -299,7 +305,7 @@
    { /* 4-1 with cam */
      0,1,0,1,0,1,0,0,  /* Teeth 1-3, then MISSING */
      0,1,2,1,0,1,0,0   /* Tooth 5, 2nd trigger on cam between 5 and 6 
-						  then 6 and 7 and MISSING 8th */
+              then 6 and 7 and MISSING 8th */
    };
    
  /* Yamaha R6 crank trigger 8 teeth missing one, (22.5deg low, 22.5deg high) 50% duty cycle during normal teeth */
@@ -323,17 +329,17 @@
    { /* 12-1 with cam */
      0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 1 and 2 */
      0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 3 and 4 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 5 and 6 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 7 and 8 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 9 and 10 */
-	   0,0,0,0,0,1,0,0,0,0,0,0, /* Tooth 11 and MISSING twelth */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 5 and 6 */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 7 and 8 */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 9 and 10 */
+     0,0,0,0,0,1,0,0,0,0,0,0, /* Tooth 11 and MISSING twelth */
      //0,0,0,0,0,1,0,0,0,0,0,1, /* Tooth 11 and WITHOUT MISSING twelth */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* 2nd rotation: Teeth 13 and 14 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 15 and 16 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 17 and 18 */
-	   0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 19 and 20 */
-	   0,0,0,0,0,1,2,2,2,2,2,1, /* Tooth 21 and 22,  2nd trigger on cam between teeth 21 and 22 for 25 deg */
-	   0,0,0,0,0,1,0,0,0,0,0,0  /* Totth 23 and MISSING 24th */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* 2nd rotation: Teeth 13 and 14 */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 15 and 16 */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 17 and 18 */
+     0,0,0,0,0,1,0,0,0,0,0,1, /* Teeth 19 and 20 */
+     0,0,0,0,0,1,2,2,2,2,2,1, /* Tooth 21 and 22,  2nd trigger on cam between teeth 21 and 22 for 25 deg */
+     0,0,0,0,0,1,0,0,0,0,0,0  /* Totth 23 and MISSING 24th */
      //0,0,0,0,0,1,0,0,0,0,0,1  /* Totth 23 and WITHOUT MISSING 24th */
    };
    
@@ -450,18 +456,18 @@
   
   const unsigned char fourty_two_hundred_wheel[] PROGMEM = 
     { /* 4200 wheel http://msextra.com/doc/triggers/4200_timing.pdf */
-		/* 55 deg high, 5 deg low, 55 deg high, 5 deg low,
-		 * 5 deg high, 5 deg low, 45 deg high, 5 deg low,
-		 * 55 deg high, 5 deg low, 65 deg high, 5 deg low,
-		 * 45 deg high, 5 deg low, (360 degreees ) */
+    /* 55 deg high, 5 deg low, 55 deg high, 5 deg low,
+     * 5 deg high, 5 deg low, 45 deg high, 5 deg low,
+     * 55 deg high, 5 deg low, 65 deg high, 5 deg low,
+     * 45 deg high, 5 deg low, (360 degreees ) */
       1,1,1,1,1,1,1,1,1,1, 
-	  1,0,1,1,1,1,1,1,1,1, 
-	  1,1,1,0,1,0,1,1,1,1, 
-	  1,1,1,1,1,0,1,1,1,1,
-	  1,1,1,1,1,1,1,0,1,1,
-	  1,1,1,1,1,1,1,1,1,1,
-	  1,0,1,1,1,1,1,1,1,1,
-	  1,0
+    1,0,1,1,1,1,1,1,1,1, 
+    1,1,1,0,1,0,1,1,1,1, 
+    1,1,1,1,1,0,1,1,1,1,
+    1,1,1,1,1,1,1,0,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    1,0,1,1,1,1,1,1,1,1,
+    1,0
   };
 
  /* Mazda F3 36-1 with cam */
@@ -484,13 +490,13 @@
   /* Mitsubishi 6g72 crank/cam */
   const unsigned char six_g_seventy_two_with_cam[] PROGMEM = 
     { /* Mitsubishi 6g72 */
-	  /* Crank signal's are 50 deg wide, and one per cylinder
-	   * Cam signals have 3 40 deg wide teeh and one 85 deg wide tooth
-	   * Counting both From TDC#1
-	   * Crank: 40 deg high, 70 deg low (repeats whole cycle)
-	   * Cam: 70 deg high, 80 deg low, 40 deg high, 150 deg low,
-	   * 40 deg high, 130 deg low, 40 deg high, 155 deg low 
-	   */
+    /* Crank signal's are 50 deg wide, and one per cylinder
+     * Cam signals have 3 40 deg wide teeh and one 85 deg wide tooth
+     * Counting both From TDC#1
+     * Crank: 40 deg high, 70 deg low (repeats whole cycle)
+     * Cam: 70 deg high, 80 deg low, 40 deg high, 150 deg low,
+     * 40 deg high, 130 deg low, 40 deg high, 155 deg low 
+     */
       3,3,3,3,3,3,3,3,3,2,
       2,2,2,2,0,0,0,0,0,0,
       0,0,0,1,1,1,1,1,1,1,
@@ -510,46 +516,46 @@
    
   const unsigned char buell_oddfire_cam[] PROGMEM = 
     { /* Buell oddfire cam wheel */
-	  /* Wheel is a cam wheel (degress are in crank degrees 
-	   * 36 deg high, 54 deg low,
-	   * 36 deg high, 54 deg low,
-	   * (Rear at TDC) 36 deg high,
-	   * 1889 deg low, 36 deg high
-	   * 54 deg low, 36 deg high,
-	   * 54 deg low, (Front at TDC),
-	   * 36 deg high, 99 deg low
-	   */
-	  1,1,1,1,0,0,0,0,0,0, /* Tooth 1 (36 deg) and 54 deg space */
-	  1,1,1,1,0,0,0,0,0,0, /* Tooth 2 (36 deg) and 54 deg space */
-	  1,1,1,1,0,0,0,0,0,0, /* Tooth 3 (36 deg) and begin of 189 deg space */
-	  0,0,0,0,0,0,0,0,0,0, /* Part of 189 deg space */
-	  0,0,0,0,0,1,1,1,1,0, /* Tail of 189 deg space, 36 deg tooth, begin of 54 deg space */
-	  0,0,0,0,0,1,1,1,1,0, /* Tail of 54 deg space, 36 deg tooth, begin of 54 deg space */
-	  0,0,0,0,0,1,1,1,1,0, /* Tail of 54 deg space, last 36 deg tooth, begin of 99 deg space */
-	  0,0,0,0,0,0,0,0,0,0  /* Tail of 99 deg space */
+    /* Wheel is a cam wheel (degress are in crank degrees 
+     * 36 deg high, 54 deg low,
+     * 36 deg high, 54 deg low,
+     * (Rear at TDC) 36 deg high,
+     * 1889 deg low, 36 deg high
+     * 54 deg low, 36 deg high,
+     * 54 deg low, (Front at TDC),
+     * 36 deg high, 99 deg low
+     */
+    1,1,1,1,0,0,0,0,0,0, /* Tooth 1 (36 deg) and 54 deg space */
+    1,1,1,1,0,0,0,0,0,0, /* Tooth 2 (36 deg) and 54 deg space */
+    1,1,1,1,0,0,0,0,0,0, /* Tooth 3 (36 deg) and begin of 189 deg space */
+    0,0,0,0,0,0,0,0,0,0, /* Part of 189 deg space */
+    0,0,0,0,0,1,1,1,1,0, /* Tail of 189 deg space, 36 deg tooth, begin of 54 deg space */
+    0,0,0,0,0,1,1,1,1,0, /* Tail of 54 deg space, 36 deg tooth, begin of 54 deg space */
+    0,0,0,0,0,1,1,1,1,0, /* Tail of 54 deg space, last 36 deg tooth, begin of 99 deg space */
+    0,0,0,0,0,0,0,0,0,0  /* Tail of 99 deg space */
     };
   
   const unsigned char gm_ls1_crank_and_cam[] PROGMEM = 
     { /* GM LS1 24 tooth crank snd 1 tooth cam */
-	  /* 12 deg low, 3 deg high, 3 deg low,
-	   * 12 deg high, 3deg low, 12 deg high,
-	   * 3 deg low, 12 deg high, 3 deg low,
-	   * 12 deg high, 3 deg low, 12 deg high,
-	   * 12 deg low, 3 deg high, 3 deg low,
-	   * 12 deg high, 3 deg low, 12 deg high,
-	   * 3 deg low, 12 deg high, 12 deg low,
-	   * 3 deg high, 12 deg low, 3 deg high,
-	   * 3 deg low, 12 deg high, 3 deg low,
-	   * 12 deg high, 12 deg low, 3 deg high,
-	   * 12 deg low, 3 deg high, 12 deg low,
-	   * 3 deg high, 12 deg low, 3 deg high,
-	   * 3 deg low, 12 deg high, 12 deg low,
-	   * 3 deg high, 3 deg low, 12 deg high,
-	   * 12 deg low, 3 deg high, 12 deg low,
-	   * 3 deg high, 12 deg low, 3 deg high
-	   * Second rotation is the SAME pattern
-	   * with cam signal held high for 360 
-	   * crank degrees */
+    /* 12 deg low, 3 deg high, 3 deg low,
+     * 12 deg high, 3deg low, 12 deg high,
+     * 3 deg low, 12 deg high, 3 deg low,
+     * 12 deg high, 3 deg low, 12 deg high,
+     * 12 deg low, 3 deg high, 3 deg low,
+     * 12 deg high, 3 deg low, 12 deg high,
+     * 3 deg low, 12 deg high, 12 deg low,
+     * 3 deg high, 12 deg low, 3 deg high,
+     * 3 deg low, 12 deg high, 3 deg low,
+     * 12 deg high, 12 deg low, 3 deg high,
+     * 12 deg low, 3 deg high, 12 deg low,
+     * 3 deg high, 12 deg low, 3 deg high,
+     * 3 deg low, 12 deg high, 12 deg low,
+     * 3 deg high, 3 deg low, 12 deg high,
+     * 12 deg low, 3 deg high, 12 deg low,
+     * 3 deg high, 12 deg low, 3 deg high
+     * Second rotation is the SAME pattern
+     * with cam signal held high for 360 
+     * crank degrees */
       4,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,
       1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,
       1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -636,46 +642,46 @@
  const unsigned char thirty_six_minus_one_plus_one_with_cam_ngc4[] PROGMEM = 
    { /* 36-1+1 NGC-4 needs 1 deg resolution, chrysler 2.0/2.4 engines
       * cam edges are at 26,62,98,134,170,314,350,368,422,458,494,530,674 and 710 dev
-	  * crank is 36-1 with alarge window at one end 2.5 teeth cycles (25 deg) wide and alosed
-	  * at 180deg apart for 2 teeth cycles (20 deg)
-	  */
-	  /* Crankshaft degrees
+    * crank is 36-1 with alarge window at one end 2.5 teeth cycles (25 deg) wide and alosed
+    * at 180deg apart for 2 teeth cycles (20 deg)
+    */
+    /* Crankshaft degrees
      1   3   5   7   9  11  13  15  17  19  21  23  25  27  29  31  33  35  37  39  41 */
-	 0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* degrees */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 41-80 */
-	 0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 81-120 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 121-160 */
-	 0,0,0,0,0,1,1,1,1,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, /* 161-200 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 201-240 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 241-280 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,0,0,1,1,1,1,1, /* 281-320 */
+   0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* degrees */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 41-80 */
+   0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 81-120 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 121-160 */
+   0,0,0,0,0,1,1,1,1,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, /* 161-200 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 201-240 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 241-280 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,0,0,1,1,1,1,1, /* 281-320 */
      0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,3,2,2,2,2,2,3,3,3,3,3, /* 321-360 */
-	 2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 361-400 */
+   2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 361-400 */
      0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 401-440 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 441-480 */
-	 0,0,0,0,0,1,1,1,1,1,0,0,0,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 481-520 */
-	 2,2,2,2,2,3,3,3,3,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 521-560 */
-	 0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 561-600 */
-	 0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 601-640 */
-	 0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,2,2,3,3,3,3,3, /* 641-680 */
-	 2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,1,0,0,0,0,0,1,1,1,1,1  /* 681-720 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 441-480 */
+   0,0,0,0,0,1,1,1,1,1,0,0,0,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3, /* 481-520 */
+   2,2,2,2,2,3,3,3,3,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 521-560 */
+   0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 561-600 */
+   0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1, /* 601-640 */
+   0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,2,2,3,3,3,3,3, /* 641-680 */
+   2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,3,3,3,3,1,0,0,0,0,0,1,1,1,1,1  /* 681-720 */
    };
 
 
  const unsigned char weber_iaw_with_cam[] PROGMEM =
    { /*Weber marelli (Cosworth/Lancia) from jimstim
-	   80 deg low, 10 deg high, Tooth 1
-	   20 deg low, 45 deg cam pulse, 15 deg low, 10 deg high, Cam tooth 1 and crank tooth 2
-	   80 deg low, 10 deg high, Crank tooth 3
-	   20 deg low, 45 deg cam pulse, 15 deg low, 10 deg high, Cam tooth2 and crank tooth 4
-	   80 deg low, 10 deg high, Crank tooth 5
-	   80 deg low, 10 deg high  Crank tooth 6
-	   80 deg low, 10 deg high, Crank tooth 7
-	   80 deg low, 10 deg high  Crank tooth 8 */
-	 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,1,1, /* Teeth 1 and 2 & cam1 */
-	 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,1,1, /* Teeth 3 and 4 & cam2 */
-	 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1, /* Teeth 5 and 6 */
-	 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1  /* Teeth 7 and 8 */
+     80 deg low, 10 deg high, Tooth 1
+     20 deg low, 45 deg cam pulse, 15 deg low, 10 deg high, Cam tooth 1 and crank tooth 2
+     80 deg low, 10 deg high, Crank tooth 3
+     20 deg low, 45 deg cam pulse, 15 deg low, 10 deg high, Cam tooth2 and crank tooth 4
+     80 deg low, 10 deg high, Crank tooth 5
+     80 deg low, 10 deg high  Crank tooth 6
+     80 deg low, 10 deg high, Crank tooth 7
+     80 deg low, 10 deg high  Crank tooth 8 */
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,1,1, /* Teeth 1 and 2 & cam1 */
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,1,1, /* Teeth 3 and 4 & cam2 */
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1, /* Teeth 5 and 6 */
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1  /* Teeth 7 and 8 */
    };
 
  const unsigned char fiat_one_point_eight_sixteen_valve_with_cam[] PROGMEM =
@@ -759,9 +765,9 @@
 
  const unsigned char twenty_four_minus_two_with_second_trigger[] PROGMEM = 
    {
-	 /* See http://postimg.org/image/pcwkrxktx/, 24-2 inner ring, single outer pulse */
-	 1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,3,2,2,2,2,2, /* 11 teeth then outer and missing */
-	 3,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0,0, /* 11 more teeth then missing */
+   /* See http://postimg.org/image/pcwkrxktx/, 24-2 inner ring, single outer pulse */
+   1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,3,2,2,2,2,2, /* 11 teeth then outer and missing */
+   3,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0,0, /* 11 more teeth then missing */
    };
 
  /* eight tooth with 1 tooth cam */
@@ -793,36 +799,36 @@
    
  const unsigned char volvo_d12acd_with_cam[] PROGMEM = 
    { /* Volvo 6 cylinder dieslet  17-1-17-1-17-1 (60 overall teeth) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 1-4 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 5-8 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 9-12 */
-	 2,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 13-16 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 17-20 1 normal, 1 long (3 teeth wide) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 21-24 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 25-28 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 29-32 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 33-36 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 37-40 1 normal, 1 long (3 teeth wide) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 41-44 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 45-48 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 49-52 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 53-56 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 57-60 1 normal, 1 long (3 teeth wide) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 1-4 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 5-8 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 9-12 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 13-16 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 17-20 1 normal, 1 long (3 teeth wide) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 21-24 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 25-28 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 29-32 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 33-36 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 37-40 1 normal, 1 long (3 teeth wide) */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 41-44 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 45-48 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 49-52 */
-	 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 53-56 */
-	 0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 57-60 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 1-4 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 5-8 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 9-12 */
+   2,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 13-16 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 17-20 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 21-24 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 25-28 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 29-32 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 33-36 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 37-40 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 41-44 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 45-48 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 49-52 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 53-56 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 57-60 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 1-4 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 5-8 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 9-12 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 13-16 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 17-20 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 21-24 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 25-28 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 29-32 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 33-36 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 37-40 1 normal, 1 long (3 teeth wide) */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 41-44 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 45-48 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 49-52 */
+   0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1, /* Teeth 53-56 */
+   0,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1, /* Teeth 57-60 1 normal, 1 long (3 teeth wide) */
    };
  const unsigned char mazda_thirty_six_minus_two_two_two_with_six_tooth_cam[] PROGMEM = 
    { /* Mazda 36-2-2-2 with 6 tooth cam */
@@ -1048,6 +1054,50 @@
      0,0,1,0,0,1,0,0,1,0,0,1  /* Totth 23 and 24th */
    };
 
+ const unsigned char subaru_impreza[] PROGMEM =
+   { /* 6/7 */
+    /* Cyl 1 TDC */
+      0,0,0,0,0,1,1,1,0,0, 0,0,2,2,0,0,0,2,2,2, /* 00-19 degrees - crank extra  5* ATDC */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 20-39 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 40-59 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 60-20 degrees */
+      0,0,0,1,1,1,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 80-99 degrees - crank 1: 83* ATDC */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0, /* 100 degrees - crank 2: 115* ATDC */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 120 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 140 degrees */
+      0,0,0,0,0,0,0,0,0,0, 1,1,1,0,0,0,0,0,0,0, /* 160 degrees - crank 3: 170* ATDC */
+    /* Cyl 2 TDC */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 180 degrees */
+      2,2,2,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 200 degrees - cam 4: 20* ATDC (200*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 220 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 240 degrees */
+      0,0,0,1,1,1,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 260 degrees - crank 4: 83* ATDC (263*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0, /* 280 degrees - crank 5: 115* ATDC (295*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 300 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 320 degrees */
+      0,0,0,0,0,0,0,0,0,0, 1,1,1,0,0,0,0,0,0,0, /* 340 degrees - crank 6: 170* ATDC (350*) */
+    /* Cyl 3 TDC */
+      0,0,0,0,1,1,1,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 360 degrees */
+      2,2,2,0,0,0,2,2,2,0, 0,0,0,0,0,0,0,0,0,0, /* 380 degrees - cam 5-6: 20* ATDC (380*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 400 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 420 degrees */
+      0,0,0,1,1,1,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 440 degrees - crank 1: 83* ATDC (443*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0, /* 460 degrees - crank 2: 115* ATDC (475*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 480 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 500 degrees */
+      0,0,0,0,0,0,0,0,0,0, 1,1,1,0,0,0,0,0,0,0, /* 520 degrees - crank 3: 170* ATDC */
+    /* Cyl 4 TDC */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 540 degrees */
+      2,2,2,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 560 degrees - cam 7: 20* ATDC (560*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 580 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 600 degrees */
+      0,0,0,1,1,1,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 620 degrees - crank 4: 83* ATDC (623*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0, /* 640 degrees - crank 5: 115* ATDC (655*) */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 660 degrees */
+      0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, /* 680 degrees */
+      0,0,0,0,0,0,0,0,0,0, 1,1,1,0,0,0,0,0,0,0  /* 700 degrees - crank 6: 170* ATDC (710*) */
+    };
+
   const unsigned char subaru_six_seven[] PROGMEM =
    { /* 6/7 */
     /* Cyl 1 TDC */
@@ -1159,25 +1209,69 @@
       0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0
    };
 
-   const unsigned char mitsubishi_3A92[] PROGMEM = 
-   {
-      3,2,3,2,2,2,3,2,1,0,1,0,
-      1,0,3,2,1,0,3,2,3,2,3,2,
-      3,2,3,2,2,2,3,2,3,2,3,2,
-      3,2,3,2,3,2,3,2,3,2,3,2,
-      3,2,2,2,2,2,3,2,3,2,1,0,
-      1,0,1,0,3,2,3,2,3,2,3,2,
-      3,2,3,2,2,2,3,2,3,2,3,2,
-      3,2,3,2,3,2,3,2,3,2,3,2,
-      3,2,3,2,2,2,3,2,1,0,1,0,
-      1,0,3,2,3,2,3,2,3,2,3,2,
-      3,2,2,2,2,2,3,2,3,2,3,2,
-      3,2,3,2,3,2,3,2,3,2,3,2
-   };
+  const unsigned char mitsubishi_3a92 [] PROGMEM =
+  {
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    2,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,0,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,2,0,
+    2,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,0,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,2,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    0,0,0,0
+  };                  
+
+  const unsigned char mitsubishi4b94 [] PROGMEM =
+  {
+    0,0,0,0,2,2,2,2,2,2,
+    2,2,2,2,2,3,3,3,3,3,
+    3,3,3,3,3,3,3,3,3,3,
+    3,3,2,2,2,2,2,2,2,2,
+    0,0,0,0,0,0,0,0,0,0,
+    0,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,0,0,
+    0,0,0,0,0,0,2,2,2,2,
+    2,2,2,2,2,2,2,3,3,3,
+    3,3,3,3,1,1,1,1,1,1,
+    1,1,1,1,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,
+    0,0,0,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,
+    0,0,0,0
+  };
+
+  
+   const unsigned char mitsubishi_4b11 [] PROGMEM =
+  {
+    1,0,1,0,1,0,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,2,2,2,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,2,2,3,2,3,2,
+    3,2,3,2,3,2,3,2,3,2,
+    3,2,3,2,3,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,0,0,
+    0,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,1,0,1,0,
+    1,0,1,0,1,0,0,0,1,0,
+    1,0,1,0
+  };
+
+   
    /* 4AGE CAS inside dizzy, 4 pulses 2 per crank revolution one cam pulse at 5 Deg  */
 
-	 const unsigned char toyota_4AGE_CAS[] PROGMEM = 
-	  {
+   const unsigned char toyota_4AGE_CAS[] PROGMEM = 
+    {
       1,1,2,2,0,0,0,0,0,0,0,0, /*5 deg per */
       0,0,0,0,0,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1190,10 +1284,10 @@
       1,1,0,0,0,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,0,0,0,0,
-	};
+  };
   /* 4AGZE inside dizzy, 24 pulses 12 per crank revolution one cam pulse at 5 Deg  */
 
-	 const unsigned char toyota_4AGZE[] PROGMEM = 
+   const unsigned char toyota_4AGZE[] PROGMEM = 
    { 1,1,2,0,0,0,0,0,0,0,0,0,
      1,1,0,0,0,0,0,0,0,0,0,0,
      1,1,0,0,0,0,0,0,0,0,0,0,
