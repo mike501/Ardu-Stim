@@ -114,9 +114,9 @@ wheels Wheels[MAX_WHEELS] = {
   { gm_seven_x_friendly_name, gm_seven_x, 1.502, 180, 720 },
   { four_twenty_a_friendly_name, four_twenty_a, 0.6, 144, 720 },
   { ford_st170_friendly_name, ford_st170, 0.6, 720, 720 },
-  { mitsubishi_3A92_friendly_name, mitsubishi_3A92, 0.6, 144, 720 },
+  { mitsubishi_3a92_friendly_name, mitsubishi_3a92, 0.6, 144, 720 },
   { mitsubishi_4b11_friendly_name, mitsubishi_4b11, 0.6, 144, 720 },
-  { mitsubishi_4b94_friendly_name, mitsubishi_4b94, 0.6, 144, 720 },
+  { mitsubishi_4g94_friendly_name, mitsubishi_4g94, 0.6, 720, 720 },
   { Toyota_4AGE_CAS_friendly_name, toyota_4AGE_CAS, 0.333, 144, 720 },
   { Toyota_4AGZE_friendly_name, toyota_4AGZE, 0.333, 144, 720 },
 };
